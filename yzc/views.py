@@ -15,7 +15,7 @@ def my_login(request):
         username1 = request.POST.get('username1')
         password1 = request.POST.get('password1')
         if username1 in username and password1 == username[username1]:
-            return HttpResponse('Welcome!')
+            return HttpResponse('Welcome!'+gender[username1]+username1)
         elif username1 not in username and len(username1) != 0:
             error = {'error': 'This username does not exist.'}
             return render(request, 'main.html', error)
@@ -42,6 +42,10 @@ def my_register(request):
                     if i.isdigit() or i.isalpha() and not '\u4e00' <= i <= '\u9fff':
                         if usernameA not in username:
                             username[usernameA] = passwordA
+                            if request.POST.get('foo') == '0':
+                                gender[usernameA] = 'Mr. '
+                            elif request.POST.get('foo') == '1':
+                                gender[usernameA] = 'Miss '
                             success = {'success': "Registration successful!"}
                             return render(request, 'main2.html', success)
                         else:
